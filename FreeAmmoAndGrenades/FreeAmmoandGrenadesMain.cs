@@ -1,6 +1,6 @@
 using HarmonyLib;
-using PhoenixPoint.Modding;
 
+using System;
 namespace FreeAmmoAndGrenades
 {
 	/// <summary>
@@ -9,25 +9,34 @@ namespace FreeAmmoAndGrenades
 	/// </summary>
 	public class ModMain : PhoenixPoint.Modding.ModMain
     {
-		public override bool CanSafelyDisable => true;
-
+		public override bool CanSafelyDisable => false;
+		
 		public static ModMain Main { get; private set; }
 
 		public new Configuration Config => (Configuration)base.Config;
 
 		public new Harmony HarmonyInstance => (Harmony)base.HarmonyInstance;
 
-		public new Geoscape GeoscapeMod => (Geoscape)base.GeoscapeMod;
+		//public new Geoscape GeoscapeMod => (Geoscape)base.GeoscapeMod;
 
-		public override void OnModEnabled() {
-
-			Main = this;
-			HarmonyInstance.PatchAll(GetType().Assembly);
+		public override void OnModEnabled()
+		{
+			try
+			{
+				Main = this;
+				FreeAmmoAndGrenadesDefs.Change_AmmoAndGrenades(Main);
+				HarmonyInstance.PatchAll();
+			}
+			catch (Exception e)
+			{
+				Main.Logger.LogInfo(e.Message);
+			}
 		}
 
-		public override void OnModDisabled() {
-			HarmonyInstance.UnpatchAll(HarmonyInstance.Id);
+		public override void OnModDisabled()
+		{
+			HarmonyInstance.UnpatchAll();
 			Main = null;
 		}
-	}
+    }
 }
