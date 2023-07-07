@@ -1,5 +1,4 @@
 using HarmonyLib;
-
 using System;
 namespace FreeAmmoAndGrenades
 {
@@ -17,14 +16,13 @@ namespace FreeAmmoAndGrenades
 
 		public new Harmony HarmonyInstance => (Harmony)base.HarmonyInstance;
 
-		//public new Geoscape GeoscapeMod => (Geoscape)base.GeoscapeMod;
+		public new Geoscape GeoscapeMod => (Geoscape)base.GeoscapeMod;
 
 		public override void OnModEnabled()
 		{
 			try
 			{
 				Main = this;
-				FreeAmmoAndGrenadesDefs.Change_AmmoAndGrenades(Main);
 				HarmonyInstance.PatchAll();
 			}
 			catch (Exception e)
@@ -38,5 +36,5 @@ namespace FreeAmmoAndGrenades
 			HarmonyInstance.UnpatchAll();
 			Main = null;
 		}
-    }
+	}
 }

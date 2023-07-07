@@ -56,6 +56,7 @@
     <Compile Include="FreeAmmoandGrenadesConfig.cs" />
     <Compile Include="FreeAmmoandGrenadesMain.cs" />
     <Compile Include="FreeAmmoAndGrenadesDefs.cs" />
+    <Compile Include="FreeAmmoandGrenadesGeoscape.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

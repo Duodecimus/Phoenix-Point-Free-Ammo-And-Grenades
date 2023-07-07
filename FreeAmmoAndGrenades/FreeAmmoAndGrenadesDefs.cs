@@ -14,12 +14,13 @@ public class FreeAmmoAndGrenadesDefs
         SharedData shared = GameUtl.GameComponent<SharedData>();
         GameTagDef GrenadeTag = (GameTagDef)Repo.GetDef("318dd3ff-28f0-1bb4-98bc-39164b7292b6"); // GrenadeItem_TagDef
         GameTagDef AmmoTag = shared.SharedGameTags.AmmoTag;
+
         // loop over all item defs in the repo
         int Count = 0;
         Main.Logger.LogInfo($"Free Ammo and Grenades: Beginning updating items");
         foreach (ItemDef ItemDef in Repo.GetAllDefs<ItemDef>())
         {
-            // All hand thrown grenades (only these weapon defs ends with "Grenade_WeaponDef" <- checked by tag)
+            // All hand thrown grenades
             if (ItemDef.Tags.Contains(GrenadeTag) && Main.Config.GrenadesAreFree) 
             {
                 //Main.Logger.LogInfo(System.String.Concat($"Applying Grenade Discount to: ", ItemDef.name));
@@ -34,6 +35,20 @@ public class FreeAmmoAndGrenadesDefs
             else if (ItemDef.Tags.Contains(AmmoTag) && Main.Config.AmmoIsFree)
             {
                 //Main.Logger.LogInfo(System.String.Concat($"Applying Ammo Discount to: ", ItemDef.name));
+                Count++;
+                ItemDef.ManufactureMaterials = 0;
+                ItemDef.ManufactureTech = 0;
+                ItemDef.ManufactureMutagen = 0;
+                ItemDef.ManufactureLivingCrystals = 0;
+                ItemDef.ManufactureOricalcum = 0;
+                ItemDef.ManufactureProteanMutane = 0;
+            }
+            else if ((ItemDef.name.EndsWith("FieldRepairKit_EquipmentDef") || 
+                      ItemDef.name.EndsWith("Medkit_EquipmentDef") || 
+                      ItemDef.name.EndsWith("Stimpack_EquipmentDef") || 
+                      ItemDef.name.EndsWith("VirophageMedkit_EquipmentDef")) && Main.Config.MedkitsAreFree)
+            {
+                //Main.Logger.LogInfo(System.String.Concat($"Applying Medkit Discount to: ", ItemDef.name));
                 Count++;
                 ItemDef.ManufactureMaterials = 0;
                 ItemDef.ManufactureTech = 0;
